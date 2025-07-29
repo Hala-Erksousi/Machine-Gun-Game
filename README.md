@@ -4,7 +4,7 @@ several cameras, accurately identify and track object movements, and display thi
 
 ---
 # Logo
-![Machine Gun Game Logo](https://github.com/Hala-Erksousi/Machine-Gun-Game/blob/master/machine-gun-game-logo.png)
+![Machine Gun Game Logo](https://github.com/Hala-Erksousi/Machine-Gun-Game/blob/master/photo_2025-07-29_20-18-36.jpg)
 
 ---
 ## About The Project
