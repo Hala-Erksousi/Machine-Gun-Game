@@ -30,7 +30,7 @@ several cameras, accurately identify and track object movements, and display thi
 
 Using vscode to setup the enviroment to use this code.
 
-#### Prerequisites
+### Prerequisites
 
 * Python 3.10
 * Arduino IDE 
@@ -41,7 +41,7 @@ Using vscode to setup the enviroment to use this code.
 * PyQt5 library
 * pyserial library
 
-#### Downloading the Project
+### Downloading the Project
 1.Clone the repository:
     ```
     git clone https://github.com/Hala-Erksousi/Machine-Gun-Game.git
