@@ -85,8 +85,8 @@ And if you love what we're doing, a simple star on the repository goes a long wa
 For any questions, suggestions, or contributions, feel free to reach out!
 
  **Email1:** halaerksousi@gmail.com     
- **Email2:** sanamsallam@gmail.com  
- **Email3:** salammsallam@gmail.com  
+ **Email2:** sana.2522005@gmail.com  
+ **Email3:** msallamsalam4@gmail.com  
 
 
 
