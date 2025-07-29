@@ -7,14 +7,14 @@ several cameras, accurately identify and track object movements, and display thi
 
 ---
 ## About The Project
-## How it works
+### How it works
 
 1.  **Camera Input:** Multiple cameras capture video streams simultaneously.
 2.  **Object Detection & Tracking:** Software identifies and tracks moving objects in real-time from these video feeds.
 3.  **GUI Display:** A user interface shows the camera feeds with detected objects and their paths.
 4.  **Hardware Interaction :** Based on  user input, an Arduino board can control motors (e.g., servo, stepper) , enabling real-world actions.
 ---
-## Technologies Used
+### Technologies Used
 
 - **Python**
     - **OpenCV:** For real-time video processing, object detection, and tracking.
@@ -26,11 +26,11 @@ several cameras, accurately identify and track object movements, and display thi
     - **Stepper Motor:** For aiming the weapon and controlling its movement
 
 ---
-## Getting Started
+### Getting Started
 
 Using vscode to setup the enviroment to use this code.
 
-### Prerequisites
+#### Prerequisites
 
 * Python 3.10
 * Arduino IDE 
@@ -41,7 +41,7 @@ Using vscode to setup the enviroment to use this code.
 * PyQt5 library
 * pyserial library
 
-### Downloading the Project
+#### Downloading the Project
 1.Clone the repository:
     ```
     git clone https://github.com/Hala-Erksousi/Machine-Gun-Game.git
