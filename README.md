@@ -6,7 +6,7 @@ several cameras, accurately identify and track object movements, and display thi
 # Logo
 
 ---
-# About The Project
+## About The Project
 ## How it works
 
 1.  **Camera Input:** Multiple cameras capture video streams simultaneously.
