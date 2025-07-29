@@ -1,7 +1,9 @@
 # Machine Gun Game
-This project presents a robust real-time detection and tracking system utilizing multiple camera inputs, accompanied by a user-friendly Graphical User Interface (GUI). The system is designed to simultaneously process video streams from several cameras, accurately identify and track object movements, and display this information in a clear and simplified manner to the user. 
+This project presents a robust real-time detection and tracking system utilizing multiple camera inputs, accompanied by a user-friendly Graphical User Interface (GUI). The system is designed to simultaneously process video streams from 
+several cameras, accurately identify and track object movements, and display this information in a clear and simplified manner to the user. 
+
 ---
-#Logo
+# Logo
 
 ---
 # About The Project
@@ -41,9 +43,10 @@ Using vscode to setup the enviroment to use this code.
 
 ### Downloading the Project
 1.Clone the repository:
-    ```bash
+    ```
     git clone https://github.com/Hala-Erksousi/Machine-Gun-Game.git
     ```
+    
 2.Upgrade pip (if necessary): pip install --upgrade pip
 
 3.Install the required packages: pip install opencv-python numpy mediapipe pyserial pyQt5
