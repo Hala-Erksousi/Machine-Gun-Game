@@ -26,7 +26,7 @@ several cameras, accurately identify and track object movements, and display thi
     - **Stepper Motor:** For aiming the weapon and controlling its movement
 
 ---
-### Getting Started
+## Getting Started
 
 Using vscode to setup the enviroment to use this code.
 
