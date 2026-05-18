@@ -23,7 +23,7 @@ class MainApp(QStackedWidget):
         self.player1_score = 0
         self.player2_score = 0
         self.current_player_index = 0
-        self.PLAYER_GAME_TIME = 80
+        self.PLAYER_GAME_TIME = 60
 
 
         self.first_page = FirstPage(self.go_to_second_page)

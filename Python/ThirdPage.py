@@ -9,6 +9,10 @@ from PyQt5.QtCore import Qt, QTimer, QUrl, QThread, pyqtSignal
 import GeneralStyleSettings as GS
 from ObjectTrackingCameraThread import ObjectTrackingCameraThread
 from AudioManager import audio_manager
+
+GESTURE_CAMERA_INDEX = 0
+OBJECT_TRACKING_CAMERA_INDEX = 1
+
 class ThirdPage(QWidget):
     def __init__(self, player_name, player_time_limit, finish_round_callback):
         super().__init__()
@@ -30,12 +34,13 @@ class ThirdPage(QWidget):
         self.game_timer_label = GS.create_styled_label(f"Time Left: {self.player_time_limit}s", 28, True, "#FF0000", alignment=Qt.AlignRight)
 
         self.setup_ui()
-        self.gesture_camera_thread = GestureCameraThread(camera_index=1, display_width=self.camera_display_width, display_height=self.camera_display_height)
+        self.gesture_camera_thread = GestureCameraThread(camera_index=GESTURE_CAMERA_INDEX, display_width=self.camera_display_width, display_height=self.camera_display_height)
         self.gesture_camera_thread.change_pixmap_signal.connect(self.update_gesture_camera_feed)
         
         
         self.object_tracking_camera_thread = ObjectTrackingCameraThread(
             player_name=self.player_name,
+            camera_index=OBJECT_TRACKING_CAMERA_INDEX,
             PLAYER_TIME_LIMIT_SECONDS=self.player_time_limit,
             display_width=self.camera_display_width,
             display_height=self.camera_display_height

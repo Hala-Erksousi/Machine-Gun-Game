@@ -3,7 +3,7 @@ import cv2
 import math
 import serial as ser
 import time
-arduino = ser.Serial(port='COM9', baudrate=9600, timeout=1)
+arduino = ser.Serial(port='COM16', baudrate=9600, timeout=1)
 time.sleep(2)
 
 from PyQt5.QtGui import QFont, QKeySequence, QColor, QImage, QPixmap
@@ -23,11 +23,8 @@ class GestureCameraThread(QThread):
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(max_num_hands=1)
         self.mp_draw = mp.solutions.drawing_utils
-        #variables for Fire and Load Cases
-        self.ready_confirmed = False
-        self.fire_triggered = False
+        # Fire command state
         self.fire_command_sent = False
-        self.Load_commend_sent=False
         self.last_stepper_send_time = 0
         self.STEPPER_SEND_INTERVAL = 0.3
     # Function for calculate angle (-30,+30)
@@ -65,7 +62,7 @@ class GestureCameraThread(QThread):
         )
     
     def run(self):
-        self.cap = cv2.VideoCapture(self.camera_index)
+        self.cap = cv2.VideoCapture(self.camera_index, cv2.CAP_DSHOW)
         # time.sleep(1)
         if not self.cap.isOpened():
             print(f"Error: Could not open gesture camera {self.camera_index}")
@@ -106,48 +103,22 @@ class GestureCameraThread(QThread):
                     cv2.putText(frame, f"Angle: {int(angle_mapped)}", (50, 120), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
                     cv2.line(frame, (x0, y0), (x8, y8), (0, 255, 255), 3)
                     cv2.circle(frame, (x8, y8), 10, (0, 0, 255), -1)
-                    # if the movement is currently load then ready_confirmed = True and all others are false 
-                    if self.is_ready_gesture(handLms):
-                        self.ready_confirmed = True
-                        self.fire_triggered = False
-                        self.fire_command_sent = False
-                        self.Load_command_send=None
-                        Load_String="Load"
-                        cv2.putText(frame, "Load", (50, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 140, 0), 3)
-                        # if the load hasn't been sent yet and the arduino is open , send a message and set Load_command_send to True
-                        if not self.Load_command_send and arduino and arduino.is_open:
-                            arduino.write(f"{Load_String}\n".encode())
-                            print("Sent 'Load' to Arduino.")
-                            self.Load_command_send = True
-                            # Add a small delay  after sending the servo command
-                            time.sleep(0.05) # 50 millisecond
-                        elif self.Load_command_send:
-                            self.Load_command_send=False
-                    #If ready_confirmed is True and  the user has performed the fire movement,  and if fire_command_sent hasn't been sent yet, 
-                    # and the Arduino is open, then send the word 'fire' to the Arduino and set fire_command_sent to True."
-                    elif self.ready_confirmed and self.is_fire_gesture(handLms):
-                        self.fire_triggered = True
-                        self.ready_confirmed = False
+                    fire_gesture_active = self.is_ready_gesture(handLms)
+                    if fire_gesture_active:
                         fire_string="FIRE"
-                        cv2.putText(frame, "FIRE", (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 3)
+                        cv2.putText(frame, "FIRE", (50, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 3)
                         if not self.fire_command_sent and arduino and arduino.is_open:
                             arduino.write(f"{fire_string}\n".encode())
                             print("Sent 'FIRE' to Arduino.")
                             self.fire_command_sent = True
                             # Add a small delay  after sending the servo command
                             time.sleep(0.05) # 50 millisecond
-                    elif not self.is_ready_gesture(handLms) and not self.is_fire_gesture(handLms):
-                       self.ready_confirmed = False
-                       self.fire_triggered = False
-                       self. fire_command_sent = False        
-                    elif self.fire_triggered and self.is_open_hand(handLms):
-                        self.ready_confirmed=False
-                        self.fire_triggered = False
+                    else:
                         self.fire_command_sent = False
-                    # send the angle to the arduino only if there's no 'load' or 'fire' movement occurring
+                    # send the angle to the arduino only if there's no fire movement occurring
                     current_time = time.time()
                     if current_time - self.last_stepper_send_time >= self.STEPPER_SEND_INTERVAL:
-                        if arduino and arduino.is_open and self.ready_confirmed==False and self.fire_triggered==False:
+                        if arduino and arduino.is_open and not fire_gesture_active:
                             arduino.write(f"{int(angle_mapped)}\n".encode())
                         self.last_stepper_send_time = current_time
 

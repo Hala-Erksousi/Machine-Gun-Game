@@ -16,10 +16,11 @@ class ObjectTrackingCameraThread(QThread):
     score_update_signal = pyqtSignal(int)
     time_remaining_signal = pyqtSignal(int)
     round_ended_signal = pyqtSignal(int)
-
-    def __init__(self, player_name, PLAYER_TIME_LIMIT_SECONDS=70, PAUSE_DURATION_SECONDS=7, parent=None, is_dummy=False, display_width=1175, display_height=900):
+   ###############################################################################3
+    def __init__(self, player_name, camera_index=0,PLAYER_TIME_LIMIT_SECONDS=70, PAUSE_DURATION_SECONDS=7, parent=None, is_dummy=False, display_width=1175, display_height=900):
         super().__init__(parent)
         self.player_name = player_name
+        self.camera_index = camera_index############################
         self._run_flag = False
         self.cap = None
         self.display_width = display_width   
@@ -60,16 +61,17 @@ class ObjectTrackingCameraThread(QThread):
                         print(f"Dummy: Object {target_to_fall.id} fell! Score: {self.current_player_fallen_score}")
         else:
             camera_opened = False
-            for i in range(3):
-                print(f"DEBUG: Trying to open object tracking camera with index {i}...")
-                self.cap = cv2.VideoCapture(0)
-                if self.cap.isOpened():
-                    self.camera_index = i 
-                    print(f"DEBUG: Object tracking camera opened successfully at index {self.camera_index}")
-                    camera_opened = True
-                    break
-                else:
-                    print(f"DEBUG: Could not open object tracking camera with index {i}")
+            # for i in range(3):
+            print(f"DEBUG: Trying to open object tracking camera with index {self.camera_index}...")
+            self.cap = cv2.VideoCapture(self.camera_index, cv2.CAP_DSHOW)
+            # self.cap = cv2.VideoCapture(i)
+            if self.cap.isOpened():
+                # self.camera_index = i 
+                print(f"DEBUG: Object tracking camera opened successfully at index {self.camera_index}")
+                camera_opened = True
+                # break
+            else:
+                print(f"DEBUG: Could not open object tracking camera with index {self.camera_index}")
 
             if not camera_opened:
                 print("Error: Could not open any object tracking camera. Please check connections or if camera is in use.")
